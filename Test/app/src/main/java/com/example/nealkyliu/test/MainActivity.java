@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 //
 //        startService(new Intent(this, MyTestService.class));
 ////        initView();
-//
-//
 
     }
 
