@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private TextView mTestTxt;
-    private ImageView mView;
     private boolean isFullScreen = false;
 
     @Override
@@ -84,46 +83,5 @@ public class MainActivity extends AppCompatActivity {
 //        logLocation();
     }
 
-    private void initView() {
-        mView = new ImageView(this);
-        mView.setBackgroundColor(Color.parseColor("#ff0dd1"));
-
-        mView.setImageResource(R.mipmap.hello);
-
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        WindowManager.LayoutParams wmParams = new WindowManager.LayoutParams();
-        wmParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
-        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-        wmParams.gravity = Gravity.TOP | Gravity.LEFT;
-        wmParams.format = PixelFormat.RGBA_8888;
-//        wmParams.x = 0;
-//        wmParams.y = 0;
-        wmParams.width = 100;
-        wmParams.height = 100;
-
-        try {
-            windowManager.addView(mView, wmParams);
-
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
-
-
-    }
-
-    private void logLocation() {
-        int location[] = new int[2];
-        mView.getLocationOnScreen(location);
-        Log.d(TAG, "LocationOnScreen = (" + location[0] + ", " + location[1] + ")");
-
-        mView.getLocationInWindow(location);
-        Log.d(TAG, "getLocationInWindow = (" + location[0] + ", " + location[1] + ")");
-    }
-
-    public static boolean isFullscreen(View topLeftView) {
-        int location[] = new int[2];
-        topLeftView.getLocationOnScreen(location);
-        return location[0] == 0 && location[1] == 0;
-    }
 
 }

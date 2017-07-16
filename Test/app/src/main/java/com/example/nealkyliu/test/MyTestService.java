@@ -152,9 +152,6 @@ public class MyTestService extends Service {
     }
 
 
-
-
-
     /**
      * 判断是否全屏
      **/
