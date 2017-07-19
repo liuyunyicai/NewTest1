@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'toutiao.tools.tinify'
 
 android {
     compileSdkVersion 25
@@ -11,6 +12,14 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    TinifyConfig{
+        tinifyKey = "lGaaMJaD_YTxtHN-QqUJNrtRY-U-dYqu"
+        whiteList = []
+        fileThresHold = 1
+        resDirList = ["res"]
+    }
+
     sourceSets.main {
         jniLibs.srcDirs = ['libs']
 //        jni.srcDirs = [] // This prevents the auto generation of Android.mk
