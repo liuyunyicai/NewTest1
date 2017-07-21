@@ -8,7 +8,7 @@ def listdir(dir,file):
         if os.path.isdir(filepath): 
             myfile.write('   ' + line + '//'+'\n')
             for li in os.listdir(filepath):
-                myfile.write('     '+li + '\n')
+                myfile.write('     '+ li + '\n')
                 fielnum = fielnum + 1
         elif os.path:   
             myfile.write('   '+line + '\n')
