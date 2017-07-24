@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.IntDef;
 import android.util.Log;
+import android.view.View;
 
 import java.lang.ref.WeakReference;
 
@@ -15,6 +16,7 @@ public class MyTestService2 extends Service {
     private static final String TAG = MyTestService2.class.getSimpleName();
     private MyMsgHandler mHandler;
     private static final int UPDATE_MSG = 1;
+    private View view;
 
     public MyTestService2() {
     }
@@ -22,7 +24,7 @@ public class MyTestService2 extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mHandler = new MyMsgHandler(this);
-
+        view = new View(this);
 
         new Thread(new Runnable() {
             @Override
@@ -78,11 +80,12 @@ public class MyTestService2 extends Service {
     private void handleMessage(Message msg) {
         switch (msg.what) {
             case UPDATE_MSG:
-//                if (FullScreenUtil.isFullScreen(this)) {
-//                    Log.w(TAG, "current is full screen");
-//                } else {
-//                    Log.i(TAG, "current is not full screen");
-//                }
+                if (FullScreenUtil.isFullScreen(this, view)) {
+                    Log.w(FullScreenUtil.TAG, "isFullScreen");
+                } else {
+                    Log.i(FullScreenUtil.TAG, "Not FullScreen");
+                }
+
 
                 break;
             default:

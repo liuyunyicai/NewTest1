@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //
-        startService(new Intent(this, MyTestService.class));
+        startService(new Intent(this, MyTestService2.class));
 ////        startService(new Intent(this, FullScreenListenerService.class));
 ////        startService(new Intent(this, MyTestService2.class));
 //
