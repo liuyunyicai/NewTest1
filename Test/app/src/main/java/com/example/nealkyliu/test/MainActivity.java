@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.PixelFormat;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,10 +15,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -25,17 +32,49 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFullScreen = false;
 
     private LinearLayout mRelatedNews;
+    private ImageView mImgView;
+
+    private float mScale = 0.5f;
+    int screen_width;
+    int screen_height;
+    private View view;
+    private Window window;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextView = (TextView) findViewById(R.id.test_txt);
-        mTextView2 = (TextView) findViewById(R.id.test_txt2);
+        screen_width = UIUtils.getScreenWidth(this);
+        screen_height = UIUtils.getScreenHeight(this);
+
+        mImgView = (ImageView) findViewById(R.id.mImgView);
+        changeImageView();
+        window = getWindow();
+        view = window.getDecorView();
+
+        mImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                } else {
+                    view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                }
+            }
+        });
 
 
-        mTextView2.setTextSize(13);
+
+
 
 
 //        View view = new View(this);
@@ -93,6 +132,20 @@ public class MainActivity extends AppCompatActivity {
 //
 //        startService(new Intent(this, MyTestService2.class));
 
+    }
+
+    private void changeImageView() {
+        mScale = 0.5 == mScale ? 0.8f : 0.5f;
+        Log.i(TAG, "current scale == " + mScale);
+        int cur_height = (int)(screen_height * mScale);
+        int cur_width = screen_width;
+        mImgView.setMaxWidth(cur_width);
+        mImgView.setMaxHeight(cur_height);
+
+        Matrix matrix = new Matrix();
+        matrix.postTranslate(0, (int)(cur_height * 0.5));
+        mImgView.setImageMatrix(matrix);
+        mImgView.setLayoutParams(new RelativeLayout.LayoutParams(cur_width, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     private void setFullScreen() {
