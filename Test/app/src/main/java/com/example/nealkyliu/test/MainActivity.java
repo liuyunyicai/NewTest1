@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        Log.i(TAG, "test 2");
 
 
 
