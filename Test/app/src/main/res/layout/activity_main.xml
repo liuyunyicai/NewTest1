@@ -15,6 +15,16 @@
         android:src="@mipmap/test"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/mImgView"
+        android:textSize="16dp"
+        android:text="HUShduHUSHdu"
+        android:textColor="#FFB800"
+        android:alpha="0.7"
+        />
+
 
 
 </RelativeLayout>

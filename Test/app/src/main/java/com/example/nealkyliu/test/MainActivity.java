@@ -1,15 +1,20 @@
 package com.example.nealkyliu.test;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompatBase;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -53,27 +58,30 @@ public class MainActivity extends AppCompatActivity {
         window = getWindow();
         view = window.getDecorView();
 
+        Intent intent = getIntent();
+        intent.putExtra("HAHA", 10L);
+        Log.w("MY_TEST", "test class " + intent.getExtras().get("HAHA").getClass());
+
         mImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LOW_PROFILE);
-                } else {
-                    view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-                }
+
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
+                Notification notification = builder
+                        .setContentTitle("这是通知标题")
+                        .setContentText("这是通知内容")
+                        .setWhen(System.currentTimeMillis())
+                        .setSmallIcon(R.mipmap.status_icon)
+                        .setColor(Color.parseColor("#FFFFD900"))
+                        .build();
+                manager.notify(1, notification);
+
+
             }
         });
 
 
-        Log.i(TAG, "test 2");
 
 
 
