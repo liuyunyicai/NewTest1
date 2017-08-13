@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
 //        View view = new View(this);
 //        View two = ((ViewGroup)view).getChildAt(0);
 //
